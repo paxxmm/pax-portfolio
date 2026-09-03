@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="color-scheme" content="only light" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Pax Mongkolnavin</title>
+<meta name="description" content="Pax Mongkolnavin — BSc Interactive Media, University of York. People-first product thinker and UX researcher. Two summers at Arise by INFINITAS." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#F5F2EC;
+    --surface:#EDEAE3;
+    --ink:#1A1A1A;
+    --muted:#6B6B6B;
+    --teal:#4A8C8C;
+    --teal-deep:#2D6B6B;
+    --hairline:rgba(26,26,26,0.10);
+    --ease:cubic-bezier(0.32,0.72,0,1);
+    --fs-display:clamp(3rem,8vw,4.5rem);
+    --fs-h1:clamp(1.9rem,4.4vw,2.25rem);
+    --fs-h2:1.5rem;
+    --fs-h3:1.125rem;
+    --fs-body:1rem;
+    --fs-cap:0.8125rem;
+    --shell:min(1120px,92vw);
+    /* Rail width = how deep the strip sits from the right edge */
+    --rail-w:150px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:var(--fs-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3{font-family:"Be Vietnam Pro","Inter",sans-serif;font-weight:700;}
+  a{color:inherit;text-decoration:none;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px;}
+  .shell{width:var(--shell);margin-inline:auto;}
+
+  /* grain */
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    opacity:0.035;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:20;
+    display:flex;justify-content:center;padding:0;pointer-events:none;
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:72px;padding:0;width:var(--shell);margin-inline:auto;pointer-events:auto;
+  }
+  header.nav::after{
+    content:'';position:absolute;bottom:0;left:0;right:0;
+    height:1px;background:var(--hairline);opacity:0;transition:opacity .5s var(--ease);
+  }
+  header.nav.scrolled::after{opacity:1;}
+  header.nav.scrolled{background:rgba(245,242,236,0.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+  header.nav{transition:background .5s var(--ease);}
+  .brand{display:inline-flex;align-items:center;text-decoration:none;}
+  nav.links{display:flex;gap:32px;font-size:0.875rem;font-weight:500;letter-spacing:0.02em;color:var(--muted);}
+  nav.links a{position:relative;padding:4px 0;transition:color .3s var(--ease);}
+  nav.links a:hover{color:var(--ink);}
+  nav.links a.active{color:var(--ink);}
+  nav.links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--teal);transition:width .35s var(--ease);}
+  nav.links a:hover::after,nav.links a.active::after{width:100%;}
+
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;width:40px;height:40px;gap:5px;background:none;border:none;cursor:pointer;padding:4px;-webkit-tap-highlight-color:transparent;}
+  .nav-toggle span{display:block;width:22px;height:1.5px;background:var(--ink);transition:transform .35s var(--ease),opacity .25s var(--ease),width .35s var(--ease);transform-origin:center;}
+  .nav-toggle.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;width:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  .mobile-menu{display:none;position:fixed;inset:0;z-index:19;background:rgba(245,242,236,0.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);flex-direction:column;align-items:flex-start;justify-content:center;padding:0 clamp(28px,8vw,60px);opacity:0;pointer-events:none;transition:opacity .35s var(--ease);}
+  .mobile-menu.open{opacity:1;pointer-events:auto;}
+  .mobile-menu a{font-family:"Be Vietnam Pro",sans-serif;font-weight:700;font-size:clamp(2rem,8vw,3rem);letter-spacing:-0.02em;color:var(--ink);text-decoration:none;display:block;padding:10px 0;opacity:0;transform:translateY(12px);transition:opacity .4s var(--ease),transform .4s var(--ease),color .25s;}
+  .mobile-menu.open a{opacity:1;transform:translateY(0);}
+  .mobile-menu.open a:nth-child(1){transition-delay:.05s;}
+  .mobile-menu.open a:nth-child(2){transition-delay:.10s;}
+  .mobile-menu.open a:nth-child(3){transition-delay:.15s;}
+  .mobile-menu a:hover{color:var(--teal);}
+  .mobile-menu .mob-sub{margin-top:40px;display:flex;flex-direction:column;gap:8px;}
+  .mobile-menu .mob-sub a{font-family:"Inter",sans-serif;font-weight:400;font-size:0.875rem;letter-spacing:0.02em;color:var(--muted);padding:4px 0;transition-delay:0s !important;}
+  .mobile-menu .mob-sub a:hover{color:var(--ink);}
+  @media (max-width:640px){.nav-toggle{display:flex;}nav.links{display:none;}.mobile-menu{display:flex;}}
+
+  /* PAGE */
+  .page{position:relative;z-index:2;padding:clamp(120px,16vh,160px) 0 clamp(80px,10vh,120px);}
+
+  /* INTRO */
+  .intro{max-width:760px;margin-bottom:clamp(64px,10vh,100px);}
+  .intro-label{font-size:var(--fs-cap);letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:24px;display:block;}
+  .intro h1{font-size:clamp(2.2rem,5.5vw,3.4rem);letter-spacing:-0.03em;line-height:1.1;margin:0 0 32px;color:var(--ink);}
+
+  /* BODY + SIDEBAR */
+  .about-body{display:grid;grid-template-columns:1fr 340px;gap:clamp(40px,6vw,88px);align-items:start;margin-bottom:clamp(80px,12vh,120px);}
+  .about-text p{font-size:1.05rem;line-height:1.8;color:var(--ink);margin:0 0 1.5em;}
+  .about-text p:last-child{margin-bottom:0;}
+  .about-text a{color:var(--ink);border-bottom:1px solid var(--teal);padding-bottom:1px;transition:color .2s var(--ease);}
+  .about-text a:hover{color:var(--teal);}
+
+  /* SIDEBAR */
+  .about-sidebar{display:flex;flex-direction:column;gap:0;}
+  .sidebar-item{padding:20px 0;border-top:1px solid var(--hairline);}
+  .sidebar-item:last-child{border-bottom:1px solid var(--hairline);}
+  .sidebar-label{font-size:var(--fs-cap);letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  .sidebar-value{font-size:0.9375rem;color:var(--ink);line-height:1.5;}
+  .sidebar-value a{color:var(--ink);border-bottom:1px solid var(--teal);padding-bottom:1px;transition:color .2s var(--ease);}
+  .sidebar-value a:hover{color:var(--teal);}
+
+  /* CONTACT */
+  section.block{position:relative;z-index:2;padding:clamp(96px,12vh,140px) 0;}
+  .contact{text-align:left;}
+  .contact h2{font-size:var(--fs-display);letter-spacing:-0.03em;margin:0 0 34px;}
+  .contact-links{display:flex;flex-direction:column;gap:6px;}
+  .contact-links a{display:inline-flex;align-items:center;gap:12px;width:max-content;font-family:"Be Vietnam Pro",sans-serif;font-weight:600;font-size:clamp(1.3rem,3vw,1.7rem);letter-spacing:-0.02em;color:var(--ink);padding:6px 0;transition:color .35s var(--ease),transform .35s var(--ease);}
+  .contact-links a:hover{color:var(--teal);transform:translateX(6px);}
+  .contact-links a:active{transform:translateX(4px) scale(0.98);transition-duration:0.1s;}
+  .contact-links a svg{width:18px;height:18px;color:var(--teal);flex:none;}
+
+  /* FOOTER */
+  footer{position:relative;z-index:2;border-top:1px solid rgba(26,26,26,0.06);padding:36px 0;}
+  .foot-inner{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:var(--fs-cap);letter-spacing:0.02em;}
+
+  /* RESPONSIVE */
+  @media (max-width:860px){.about-body{grid-template-columns:1fr;}.about-sidebar{margin-top:16px;}section.block{padding:84px 0;}}
+  @media (max-width:520px){.intro h1{font-size:2rem;}.contact h2{font-size:clamp(2rem,10vw,3rem);}.contact-links a{font-size:clamp(1rem,5vw,1.4rem);}}
+
+  /* FORCE LIGHT */
+  :root{color-scheme:only light;}
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#F5F2EC;--surface:#EDEAE3;--ink:#1A1A1A;--muted:#6B6B6B;--teal:#4A8C8C;--teal-deep:#2D6B6B;--hairline:rgba(26,26,26,0.10);}
+    body{background:#F5F2EC !important;color:#1A1A1A !important;}
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .65s var(--ease),transform .65s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .d1{transition-delay:.07s;}.d2{transition-delay:.14s;}.d3{transition-delay:.21s;}
+
+  /* BTT */
+  .btt{position:fixed;bottom:28px;right:28px;z-index:30;width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px -4px rgba(45,52,48,0.28);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .35s var(--ease),transform .35s var(--ease),background .25s var(--ease);-webkit-tap-highlight-color:transparent;}
+  .btt.visible{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .btt:hover{background:var(--teal-deep);}
+  .btt svg{width:18px;height:18px;flex:none;}
+  @media(max-width:520px){.btt{bottom:20px;right:16px;width:40px;height:40px;}}
+
+  /* ============================================================
+     CITY SKYLINES — desktop right rail
+     
+     Strategy: four absolutely-positioned slots, each 25vh tall,
+     stacked. Each contains one SVG with a wide landscape viewBox.
+     The SVG is rotated -90deg and sized so that after rotation
+     it fills its slot exactly:
+       - SVG natural width  = slot height  = 25vh
+       - SVG natural height = rail width   = --rail-w (80px)
+     transform-origin at top-left, then translate to position.
+     ============================================================ */
+
+  /* ============================================================
+     CITY SKYLINES — static strip just above footer, all breakpoints
+     ============================================================ */
+  .skyline-strip{
+    position:relative;
+    z-index:2;
+    width:100%;
+    height:120px;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .skyline-strip svg{
+    position:absolute;
+    bottom:0; left:0;
+    width:100%;
+    height:100%;
+    color:var(--teal);
+    opacity:0.065;
+    display:block;
+  }
+  @media(max-width:480px){
+    .skyline-strip{ height:72px; }
+  }
+</style>
+</head>
+<body>
+
+<button class="btt" id="btt" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+<div class="grain" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="arrow" viewBox="0 0 24 24">
+    <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+
+
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="shell nav-inner">
+    <a class="brand" href="index.html" aria-label="Pax — home"></a>
+    <nav class="links" aria-label="Primary">
+      <a href="index.html#work">Work</a>
+      <a href="about.html" class="active">About</a>
+      <a href="pax-resume.pdf" target="_blank" rel="noopener">Resume <span aria-hidden="true">↗</span></a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="index.html#work" class="mob-link">Work</a>
+  <a href="about.html" class="mob-link">About</a>
+  <a href="pax-resume.pdf" target="_blank" rel="noopener" class="mob-link">Resume ↗</a>
+  <div class="mob-sub">
+    <a href="mailto:pax.navin@gmail.com">pax.navin@gmail.com</a>
+    <a href="https://linkedin.com/in/pirawat-mongkolnavin" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</div>
+
+<main id="top">
+  <div class="page">
+    <div class="shell">
+      <div class="intro">
+        <span class="intro-label reveal">About</span>
+        <h1 class="reveal d1">Hi, I'm Pax.</h1>
+      </div>
+      <div class="about-body">
+        <div class="about-text reveal d2">
+          <p>I grew up moving around — New York, Bangkok, London, York. Arriving somewhere new means figuring out unfamiliar systems from scratch: how to pay, how to navigate, which apps actually work here. You stop assuming anything will make sense. That habit of approaching things without preconceptions turned out to be a useful foundation for research.</p>
+          <p>Back in Bangkok, my parents and grandparents would regularly hand me their phones with some version of the same question: why isn't this working, or why can't I do this thing. I couldn't always fix it. But I started to notice that their frustration was usually reasonable. The product had made assumptions about who was using it, and they just didn't fit.</p>
+          <p>I've spent two summers at <a href="https://www.infinitas.co.th" target="_blank" rel="noopener">Arise by INFINITAS</a>, working on PaoTang — a government-linked financial app used by tens of millions of people in Thailand. In 2025, I studied QR payment flows across five Thai banking apps, starting from my own observations about friction in time-sensitive payment situations. In 2026, I moved into research: moderating usability sessions for a proposed homepage redesign, building synthesis artefacts, and eventually presenting findings independently to a room of product owners, UX designers, and business analysts.</p>
+          <p>That's the kind of work I want to keep doing. Finding where the gap is between what a product assumes and what people actually need — and being involved in deciding what to do about it. That sits across research, product, and strategy, and I'm interested in all three.</p>
+        </div>
+        <aside class="about-sidebar reveal d3" aria-label="Quick facts">
+          <div class="sidebar-item">
+            <p class="sidebar-label">Currently</p>
+            <p class="sidebar-value">BSc Interactive Media, University of York. Final year.</p>
+          </div>
+          <div class="sidebar-item">
+            <p class="sidebar-label">Experience</p>
+            <p class="sidebar-value">UX Design intern, Arise by INFINITAS, 2025.<br>UX Research intern, Arise by INFINITAS, 2026.</p>
+          </div>
+          <div class="sidebar-item">
+            <p class="sidebar-label">Interests</p>
+            <p class="sidebar-value">Product strategy, digital transformation, AI experience design.</p>
+          </div>
+          <div class="sidebar-item">
+            <p class="sidebar-label">Languages</p>
+            <p class="sidebar-value">Thai and English.</p>
+          </div>
+          <div class="sidebar-item">
+            <p class="sidebar-label">Say hi</p>
+            <p class="sidebar-value"><a href="mailto:pax.navin@gmail.com">pax.navin@gmail.com</a></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <section class="block contact" id="contact" aria-label="Contact">
+    <div class="shell">
+      <h2>let's talk.</h2>
+      <div class="contact-links">
+        <a href="mailto:pax.navin@gmail.com"><svg aria-hidden="true"><use href="#arrow"/></svg>pax.navin@gmail.com</a>
+        <a href="https://linkedin.com/in/pirawat-mongkolnavin" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#arrow"/></svg>linkedin.com/in/pirawat-mongkolnavin</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+<!-- CITY SKYLINE STRIP — fixed bottom, all screens -->
+<div class="skyline-strip" aria-hidden="true">
+  <svg viewBox="0 0 1200 80" fill="currentColor" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+    <rect x="0" y="72" width="1200" height="8"/>
+    <!-- NEW YORK 0-299 -->
+    <rect x="0" y="58" width="12" height="14"/>
+    <rect x="12" y="54" width="9" height="18"/>
+    <rect x="24" y="40" width="7" height="32"/>
+    <rect x="26" y="34" width="2" height="6"/>
+    <line x1="27" y1="40" x2="18" y2="72" stroke="currentColor" stroke-width="0.5" fill="none"/>
+    <line x1="27" y1="40" x2="36" y2="72" stroke="currentColor" stroke-width="0.5" fill="none"/>
+    <rect x="18" y="68" width="24" height="2"/>
+    <rect x="44" y="46" width="8" height="26"/>
+    <rect x="52" y="42" width="7" height="30"/>
+    <!-- Chrysler -->
+    <rect x="62" y="24" width="13" height="48"/>
+    <rect x="64" y="18" width="9" height="8"/>
+    <polygon points="68.5,6 63,18 74,18"/>
+    <polygon points="68.5,10 64,17 73,17"/>
+    <rect x="76" y="38" width="8" height="34"/>
+    <rect x="84" y="44" width="7" height="28"/>
+    <!-- Empire State -->
+    <rect x="96" y="16" width="16" height="56"/>
+    <rect x="98" y="10" width="12" height="8"/>
+    <rect x="101" y="4" width="6" height="8"/>
+    <rect x="103" y="1" width="3" height="4"/>
+    <line x1="104.5" y1="0" x2="104.5" y2="1" stroke="currentColor" stroke-width="1.2"/>
+    <rect x="113" y="40" width="8" height="32"/>
+    <rect x="121" y="44" width="7" height="28"/>
+    <rect x="128" y="48" width="8" height="24"/>
+    <!-- One WTC -->
+    <polygon points="158,0 145,72 171,72"/>
+    <rect x="136" y="44" width="9" height="28"/>
+    <rect x="172" y="46" width="8" height="26"/>
+    <rect x="180" y="50" width="7" height="22"/>
+    <rect x="187" y="52" width="8" height="20"/>
+    <rect x="195" y="54" width="7" height="18"/>
+    <rect x="202" y="56" width="8" height="16"/>
+    <rect x="210" y="58" width="8" height="14"/>
+    <rect x="218" y="60" width="8" height="12"/>
+    <rect x="226" y="58" width="7" height="14"/>
+    <rect x="233" y="62" width="8" height="10"/>
+    <rect x="241" y="60" width="8" height="12"/>
+    <rect x="249" y="64" width="8" height="8"/>
+    <rect x="257" y="62" width="8" height="10"/>
+    <rect x="265" y="64" width="8" height="8"/>
+    <rect x="273" y="66" width="8" height="6"/>
+    <rect x="281" y="64" width="8" height="8"/>
+    <rect x="289" y="66" width="8" height="6"/>
+    <!-- separator -->
+    <rect x="299" y="52" width="1" height="20" opacity="0.25"/>
+    <!-- BANGKOK 300-599 -->
+    <rect x="302" y="58" width="10" height="14"/>
+    <rect x="312" y="54" width="9" height="18"/>
+    <!-- Bridge pylon -->
+    <rect x="326" y="34" width="6" height="38"/>
+    <polygon points="329,20 325,34 333,34"/>
+    <line x1="329" y1="34" x2="318" y2="72" stroke="currentColor" stroke-width="0.5" fill="none"/>
+    <line x1="329" y1="34" x2="342" y2="72" stroke="currentColor" stroke-width="0.5" fill="none"/>
+    <!-- Wat Arun -->
+    <rect x="360" y="50" width="26" height="22"/>
+    <rect x="363" y="42" width="20" height="10"/>
+    <rect x="367" y="34" width="12" height="10"/>
+    <rect x="370" y="26" width="6" height="10"/>
+    <polygon points="373,8 369,26 377,26"/>
+    <line x1="373" y1="2" x2="373" y2="8" stroke="currentColor" stroke-width="1.2"/>
+    <rect x="352" y="62" width="7" height="10"/>
+    <polygon points="355.5,54 352,62 359,62"/>
+    <rect x="386" y="62" width="7" height="10"/>
+    <polygon points="389.5,54 386,62 393,62"/>
+    <!-- Giant Swing -->
+    <rect x="404" y="46" width="3" height="26"/>
+    <rect x="416" y="46" width="3" height="26"/>
+    <rect x="402" y="42" width="19" height="5"/>
+    <path d="M405 42 Q413 32 419 42" fill="none" stroke="currentColor" stroke-width="1.2"/>
+    <!-- Baiyoke -->
+    <rect x="436" y="8" width="18" height="64"/>
+    <rect x="438" y="2" width="14" height="8"/>
+    <rect x="435" y="20" width="24" height="3" rx="1"/>
+    <rect x="435" y="36" width="24" height="3" rx="1"/>
+    <rect x="454" y="20" width="13" height="52"/>
+    <rect x="467" y="26" width="11" height="46"/>
+    <rect x="478" y="32" width="10" height="40"/>
+    <rect x="488" y="38" width="9" height="34"/>
+    <rect x="497" y="44" width="9" height="28"/>
+    <rect x="506" y="48" width="8" height="24"/>
+    <rect x="514" y="52" width="8" height="20"/>
+    <rect x="522" y="54" width="8" height="18"/>
+    <rect x="530" y="56" width="7" height="16"/>
+    <rect x="537" y="58" width="8" height="14"/>
+    <rect x="545" y="56" width="7" height="16"/>
+    <rect x="552" y="60" width="8" height="12"/>
+    <rect x="560" y="58" width="7" height="14"/>
+    <rect x="567" y="62" width="8" height="10"/>
+    <rect x="575" y="60" width="7" height="12"/>
+    <rect x="582" y="64" width="8" height="8"/>
+    <rect x="590" y="62" width="8" height="10"/>
+    <!-- separator -->
+    <rect x="599" y="52" width="1" height="20" opacity="0.25"/>
+    <!-- LONDON 600-899 -->
+    <!-- Big Ben -->
+    <rect x="606" y="28" width="14" height="44"/>
+    <rect x="607" y="22" width="12" height="8"/>
+    <rect x="609" y="16" width="8" height="8"/>
+    <polygon points="613,4 607,16 619,16"/>
+    <line x1="613" y1="0" x2="613" y2="4" stroke="currentColor" stroke-width="1.2"/>
+    <rect x="620" y="46" width="34" height="26"/>
+    <rect x="620" y="41" width="3" height="6"/><rect x="624" y="41" width="3" height="6"/>
+    <rect x="628" y="41" width="3" height="6"/><rect x="632" y="41" width="3" height="6"/>
+    <rect x="636" y="41" width="3" height="6"/><rect x="640" y="41" width="3" height="6"/>
+    <rect x="644" y="41" width="3" height="6"/><rect x="648" y="41" width="3" height="6"/>
+    <!-- London Eye -->
+    <circle cx="676" cy="44" r="20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <circle cx="676" cy="44" r="3"/>
+    <line x1="676" y1="24" x2="676" y2="64" stroke="currentColor" stroke-width="0.7"/>
+    <line x1="656" y1="44" x2="696" y2="44" stroke="currentColor" stroke-width="0.7"/>
+    <line x1="662" y1="30" x2="690" y2="58" stroke="currentColor" stroke-width="0.7"/>
+    <line x1="662" y1="58" x2="690" y2="30" stroke="currentColor" stroke-width="0.7"/>
+    <rect x="674" y="64" width="4" height="8"/>
+    <!-- Tower Bridge -->
+    <rect x="718" y="44" width="10" height="28"/>
+    <rect x="720" y="34" width="7" height="12"/>
+    <polygon points="723.5,22 717,34 730,34"/>
+    <rect x="740" y="44" width="10" height="28"/>
+    <rect x="741" y="34" width="7" height="12"/>
+    <polygon points="744.5,22 738,34 751,34"/>
+    <rect x="728" y="56" width="13" height="4"/>
+    <rect x="700" y="66" width="68" height="3"/>
+    <!-- The Shard -->
+    <polygon points="802,0 789,72 815,72"/>
+    <rect x="754" y="50" width="9" height="22"/>
+    <rect x="763" y="52" width="8" height="20"/>
+    <rect x="771" y="50" width="8" height="22"/>
+    <rect x="779" y="52" width="10" height="20"/>
+    <rect x="815" y="50" width="9" height="22"/>
+    <rect x="824" y="52" width="8" height="20"/>
+    <rect x="832" y="54" width="8" height="18"/>
+    <rect x="840" y="56" width="7" height="16"/>
+    <rect x="847" y="58" width="8" height="14"/>
+    <rect x="855" y="56" width="7" height="16"/>
+    <rect x="862" y="60" width="8" height="12"/>
+    <rect x="870" y="58" width="7" height="14"/>
+    <rect x="877" y="62" width="8" height="10"/>
+    <rect x="885" y="60" width="7" height="12"/>
+    <rect x="892" y="64" width="8" height="8"/>
+    <!-- separator -->
+    <rect x="899" y="52" width="1" height="20" opacity="0.25"/>
+    <!-- YORK 900-1200 -->
+    <rect x="902" y="58" width="18" height="14"/>
+    <rect x="902" y="53" width="3" height="6"/><rect x="906" y="53" width="3" height="6"/>
+    <rect x="910" y="53" width="3" height="6"/><rect x="914" y="53" width="3" height="6"/>
+    <rect x="918" y="53" width="2" height="6"/>
+    <rect x="910" y="62" width="6" height="10"/>
+    <rect x="920" y="60" width="8" height="12"/>
+    <rect x="928" y="62" width="7" height="10"/>
+    <!-- York Minster left tower -->
+    <rect x="938" y="18" width="17" height="54"/>
+    <rect x="939" y="12" width="15" height="8"/>
+    <rect x="941" y="6" width="11" height="8"/>
+    <polygon points="946,0 940,6 952,6"/>
+    <!-- right tower -->
+    <rect x="984" y="18" width="17" height="54"/>
+    <rect x="985" y="12" width="15" height="8"/>
+    <rect x="987" y="6" width="11" height="8"/>
+    <polygon points="992,0 986,6 998,6"/>
+    <!-- nave -->
+    <rect x="955" y="38" width="29" height="34"/>
+    <!-- central tower -->
+    <rect x="962" y="10" width="15" height="30"/>
+    <rect x="964" y="4" width="11" height="8"/>
+    <polygon points="969.5,0 962,4 977,4"/>
+    <!-- rose window -->
+    <circle cx="969" cy="50" r="5" fill="none" stroke="currentColor" stroke-width="1"/>
+    <!-- Clifford's Tower -->
+    <rect x="1020" y="52" width="22" height="20"/>
+    <path d="M1020 52 Q1031 40 1042 52" fill="currentColor"/>
+    <rect x="1020" y="47" width="3" height="6"/><rect x="1024" y="47" width="3" height="6"/>
+    <rect x="1028" y="47" width="3" height="6"/><rect x="1032" y="47" width="3" height="6"/>
+    <rect x="1036" y="47" width="3" height="6"/><rect x="1040" y="47" width="2" height="6"/>
+    <ellipse cx="1031" cy="72" rx="18" ry="5"/>
+    <!-- trailing -->
+    <rect x="1001" y="56" width="10" height="16"/>
+    <rect x="1011" y="58" width="8" height="14"/>
+    <rect x="1044" y="56" width="9" height="16"/>
+    <rect x="1053" y="58" width="8" height="14"/>
+    <rect x="1061" y="60" width="9" height="12"/>
+    <rect x="1070" y="58" width="8" height="14"/>
+    <rect x="1078" y="62" width="9" height="10"/>
+    <rect x="1087" y="60" width="8" height="12"/>
+    <rect x="1095" y="62" width="9" height="10"/>
+    <rect x="1104" y="64" width="8" height="8"/>
+    <rect x="1112" y="62" width="9" height="10"/>
+    <rect x="1121" y="66" width="8" height="6"/>
+    <rect x="1129" y="64" width="9" height="8"/>
+    <rect x="1138" y="66" width="8" height="6"/>
+    <rect x="1146" y="68" width="9" height="4"/>
+    <rect x="1155" y="66" width="8" height="6"/>
+    <rect x="1163" y="68" width="9" height="4"/>
+    <rect x="1172" y="70" width="8" height="2"/>
+    <rect x="1180" y="68" width="9" height="4"/>
+    <rect x="1189" y="70" width="11" height="2"/>
+  </svg>
+</div>
+
+<footer>
+  <div class="shell foot-inner">
+    <span>© 2026 Pax Mongkolnavin. All Rights Reserved.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var nav = document.getElementById("nav");
+  var onScroll = function(){ nav.classList.toggle("scrolled", window.scrollY > 24); };
+  onScroll();
+  window.addEventListener("scroll", onScroll, {passive:true});
+  var items = document.querySelectorAll(".reveal");
+  if("IntersectionObserver" in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, {threshold:0.08, rootMargin:"0px 0px -24px 0px"});
+    items.forEach(function(el){ io.observe(el); });
+  } else {
+    items.forEach(function(el){ el.classList.add("in"); });
+  }
+  var toggle = document.getElementById("nav-toggle");
+  var menu = document.getElementById("mobile-menu");
+  if(toggle && menu){
+    toggle.addEventListener("click", function(){
+      var open = menu.classList.toggle("open");
+      toggle.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", open);
+      menu.setAttribute("aria-hidden", !open);
+      document.body.style.overflow = open ? "hidden" : "";
+    });
+    menu.querySelectorAll("a").forEach(function(a){
+      a.addEventListener("click", function(){
+        menu.classList.remove("open");
+        toggle.classList.remove("open");
+        toggle.setAttribute("aria-expanded","false");
+        menu.setAttribute("aria-hidden","true");
+        document.body.style.overflow = "";
+      });
+    });
+  }
+})();
+</script>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  var b=document.getElementById("btt");
+  if(!b)return;
+  window.addEventListener("scroll",function(){
+    b.classList.toggle("visible",window.scrollY>320);
+  },{passive:true});
+  b.addEventListener("click",function(){
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+</script>
+</body>
+</html>
